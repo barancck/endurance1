@@ -99,10 +99,22 @@ print(
     f"Single element in the list is of type {type(true_color_imgs[-1])} and has shape {true_color_imgs[-1].shape}"
 )
 
-image = true_color_imgs[0]
-print(f"Image type: {image.dtype}")
+image_rgb_data = true_color_imgs[0]
+print(f"Image type: {image_rgb_data.dtype}")
 
 # plot function
 # factor 1/255 to scale between 0-1
 # factor 3.5 to increase brightness
-plot_image(image, factor=3.5 / 255, clip_range=(0, 1))
+# plot_image(image, factor=3.5 / 255, clip_range=(0, 1))
+
+from PIL import Image
+
+(width, height, _) = image_rgb_data.shape
+image = Image.fromarray(image_rgb_data)
+
+# Save the image to a file
+image.save('gradient_image.png')
+
+# Optionally, show the image (for testing)
+image.show()
+
