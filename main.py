@@ -22,9 +22,11 @@ from requests_oauthlib import OAuth2Session
 client_id = "5fe00af8-9737-45f6-9749-611869356681"
 client_secret = "uJoCDthcy6Lg04Eqv2ycMLoHagMowLQK"
 
+
 def sentinelhub_compliance_hook(response):
     response.raise_for_status()
     return response
+
 
 # Create a session
 client = BackendApplicationClient(client_id=client_id)
