@@ -9,6 +9,11 @@ from torch.nn import functional
 from torchvision import transforms
 from torch.utils.data import DataLoader, Dataset, random_split
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+
 # Architecture of the model
 
 class Conv3k(nn.Module):
@@ -105,25 +110,15 @@ class Unet(nn.Module):
         u4 = self.up_conv4(u3, x1)
 
         return self.last_conv(u4)
-    
-    
-import cv2
-import smtplib
-import torch
-import numpy as np
-import os
-from PIL import Image
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
-from torchvision import transforms
 
 # SMTP configuration
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
+#sender_email = 'medium.aigela@gmail.com'
+#sender_password = 'ydml csoh kdbw izbm'  # Use the generated App Password here
 sender_email = 'medium.aigela@gmail.com'
-sender_password = 'ydml csoh kdbw izbm'  # Use the generated App Password here
-receiver_email = []
+sender_password = 'ydml csoh kdbw izbm'  
+receiver_email = ["i.m.popov03@gmail.com"]
 
 body = 'Smoke, potentially from a forest fire, has been detected near your area through satellite observations from Platform 1!'
 subject = 'Smoke Detected!'
@@ -171,8 +166,7 @@ def process_image(image_path, output_folder):
     # Get the output from the model
     with torch.no_grad():
         output_smoke = model_smoke(input_batch)
-        output = model_forest(inp
-                            ut_batch)
+        output = model_forest(input_batch)
         output = output[0]
 
         ML_output = output.argmax(0).byte().cpu().numpy()
